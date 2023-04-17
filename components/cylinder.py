@@ -48,24 +48,4 @@ class Cylinder(Mesh):
         elif axis == 'z':
             self.rotateZ(90)
 
-    # def rotateX(self, angle):
-    #     new_vertices = []
-    #     for vertex in self.vertices:
-    #         p,q = math.cos(math.radians(angle)), math.sin(math.radians(angle))
-    #         new_vertices.append([vertex[0], vertex[1]*p - vertex[2]*q, vertex[1]*q + vertex[2]*p])
-    #     self.vertices = new_vertices
-
-    # def rotateY(self, angle):
-    #     new_vertices = list(np.dot(np.array(self.vertices), np.array([[math.cos(angle), 0, -math.sin(angle)], [0, 1, 0], [ math.sin(angle), 0, math.cos(angle)]])))
-    #     self.vertices = new_vertices
-    
-    # def rotateZ(self, angle):
-    #     new_vertices = []
-    #     for vertex in self.vertices:
-    #         p,q = math.cos(math.radians(angle)), math.sin(math.radians(angle))
-    #         new_vertices.append([vertex[0]*p - vertex[1]*q, vertex[0]*q + vertex[1]*p, vertex[2]])
-    #     self.vertices = new_vertices
-    
-    # def rotate(self, angle, axis):
-    #     pass
     

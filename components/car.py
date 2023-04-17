@@ -7,39 +7,6 @@ from components.mesh import Mesh, rgb
 from components.cuboid import Cuboid
 from components.cylinder import Cylinder
 
-
-def calculate_next_position(previous_position, current_position, distance):
-    """
-    Calculates the next position of a given 3D object, given the previous position,
-    current position, and distance from the current position to the next position.
-
-    Args:
-        previous_position (tuple or list): The previous position of the object as a tuple or list of three coordinates (x, y, z).
-        current_position (tuple or list): The current position of the object as a tuple or list of three coordinates (x, y, z).
-        distance (float): The distance from the current position to the next position.
-
-    Returns:
-        tuple: The next position of the object as a tuple of three coordinates (x, y, z).
-    """
-    # Convert inputs to numpy arrays for vector operations
-    previous_position = np.array(previous_position)
-    current_position = np.array(current_position)
-
-    # Calculate the direction vector from previous position to current position
-    direction_vector = current_position - previous_position
-
-    # Normalize the direction vector
-    direction_vector_normalized = direction_vector / \
-        np.linalg.norm(direction_vector)
-
-    # Calculate the next position by adding the normalized direction vector scaled by the distance
-    next_position = current_position + (direction_vector_normalized * distance)
-
-    # Return the next position as a tuple
-    print(current_position, "->", next_position)
-    return tuple(next_position)
-
-
 class Wheel():
     def __init__(self, initalPos=(0, 0, 0), initialRotation=(0, 0, 0)) -> None:
         self.w1 = Cylinder(25, 0.5, 0.1, 4, rgb(86, 113, 137))
@@ -83,13 +50,13 @@ class Wheel():
 class Body():
     def __init__(self, bodyColor, initalPos=(0, 0, 0), initialRotation=(0, 0, 0)) -> None:
         self.buttomCuboid = Cuboid(2, 0.5, 1, bodyColor)
-        self.buttomCuboid.rotate(math.radians(initialRotation[1]), 'y')
-        self.buttomCuboid.translateXYZ(0, 1 , 0)
+        self.buttomCuboid.rotateY(math.radians(initialRotation[1]))
+        self.buttomCuboid.translateXYZ((0, 1 , 0))
 
         self.upperCuboid = Cuboid(1, 0.5, 1, bodyColor)
 
-        self.upperCuboid.rotate(math.radians(initialRotation[1]), 'y')
-        self.upperCuboid.translateXYZ(0 , 2, 0)
+        self.upperCuboid.rotateY(math.radians(initialRotation[1]))
+        self.upperCuboid.translateXYZ((0 , 2, 0))
 
         self.translateXYZ(initalPos)
 
@@ -98,12 +65,15 @@ class Body():
         self.upperCuboid.draw()
 
     def translateXYZ(self, position):
-        self.buttomCuboid.translateXYZ(position[0], position[1], position[2])
-        self.upperCuboid.translateXYZ(position[0], position[1], position[2])
+        self.buttomCuboid.translateXYZ(position)
+        self.upperCuboid.translateXYZ(position)
 
     def rotate(self, angle, axis):
-        self.buttomCuboid.rotate(angle, axis)
-        self.upperCuboid.rotate(angle, axis)
+        if axis == 'y':
+            self.buttomCuboid.rotateY(angle)
+            self.upperCuboid.rotateY(angle)
+        else:
+            pass
 
 
 class Car:
@@ -120,27 +90,24 @@ class Car:
         self.body.draw()
         self.wheel.draw()
 
-    def moveForward(self, distance: float):
-        _tmpPos = self.position
-        # check if the self.distance and distance have same sign
-        if (self.distance * distance) > 0:
-            self.distance += distance
-            self.position = calculate_next_position(
-                self.prevPosition, self.position, self.distance)
-        else:
-            self.distance = distance
-            self.position = calculate_next_position(
-                self.prevPosition, self.position, self.distance)
+    # def moveForward(self, distance: float):
+    #     _tmpPos = self.position
+    #     # check if the self.distance and distance have same sign
+    #     if (self.distance * distance) > 0:
+    #         self.distance += distance
+    #         self.position = calculate_next_position(
+    #             self.prevPosition, self.position, self.distance)
+    #     else:
+    #         self.distance = distance
+    #         self.position = calculate_next_position(
+    #             self.prevPosition, self.position, self.distance)
 
-        self.prevPosition = _tmpPos
+    #     self.prevPosition = _tmpPos
 
-        self.body.translateXYZ(self.position)
-        self.wheel.translateXYZ(self.position)
+    #     self.body.translateXYZ(self.position)
+    #     self.wheel.translateXYZ(self.position)
 
     def rotate(self, angle, axis):
         self.body.rotate(angle, axis)
         self.wheel.rotate(angle, axis)
 
-        # get the center of rotation
-        # if direction == 0 : # left
-        # center a point just left side of the car with radius amount of distance

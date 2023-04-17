@@ -40,12 +40,4 @@ class Cuboid(Mesh):
         new_vertices = list(numpy.multiply(numpy.array(self.vertices), scale))
         self.vertices = new_vertices
 
-    def translateXYZ(self, x, y, z):
-        new_vertices = list(numpy.add(numpy.array(self.vertices), [x, y, z]))
-        self.vertices = new_vertices
-
-    def rotate(self, angle, axis):
-        new_vertices = list(numpy.dot(numpy.array(self.vertices), numpy.array([[math.cos(angle), 0, -math.sin(angle)], [0, 1, 0], [ math.sin(angle), 0, math.cos(angle)]])))
-        self.vertices = new_vertices
-
     
