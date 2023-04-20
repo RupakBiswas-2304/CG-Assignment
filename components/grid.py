@@ -7,7 +7,7 @@ from components.mesh import Mesh, rgb
 
 
 class Grid(Mesh):
-    def __init__(self ) -> None:
+    def __init__(self) -> None:
         super().__init__(1, rgb(0, 200, 0))
 
         self.length = 50
@@ -23,7 +23,7 @@ class Grid(Mesh):
 
             self.vertices.append([-i, 0, self.width])
             self.vertices.append([-i, 0, -self.width])
-        
+
         for i in range(self.width):
             self.vertices.append([self.length, 0, i])
             self.vertices.append([-self.length, 0, i])
@@ -32,13 +32,16 @@ class Grid(Mesh):
             self.vertices.append([-self.length, 0, -i])
 
     def generateEdges(self):
-        for i in range(len(self.vertices)//2):
-            self.edges.append((i*2, i*2+1))
-        
+        for i in range(len(self.vertices) // 2):
+            self.edges.append((i * 2, i * 2 + 1))
+
+    def generateSurface(self):
+        pass
+
+
 class NoiseLandscape(Grid):
     def __init__(self) -> None:
         super().__init__()
-    
+
     def addNoise(self):
         pass
-    

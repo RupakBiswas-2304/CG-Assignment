@@ -7,9 +7,9 @@ from components.mesh import Mesh
 
 
 class Cuboid(Mesh):
-    def __init__(self, x, y, z, color = (0,0,1)) -> None:
-        super().__init__(4, color)
-        self.generateCuboid(x,y,z)
+    def __init__(self, x, y, z, color_v=(0, 0, 1), color_s=(0, 0, 1)) -> None:
+        super().__init__(4, color_v, color_s)
+        self.generateCuboid(x, y, z)
         self.generateEdges()
         self.generateSurface()
 
@@ -48,5 +48,3 @@ class Cuboid(Mesh):
     def scaleEdges(self, scale):
         new_vertices = list(numpy.multiply(numpy.array(self.vertices), scale))
         self.vertices = new_vertices
-
-    

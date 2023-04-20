@@ -21,7 +21,7 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     # pygame.mouse.set_visible(False)
 
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 50)
 
     # Settup camera
     t_x, t_y, t_z = -5, -5, -15
@@ -32,11 +32,11 @@ def main():
     # draw pyramid as a solid object
     glEnable(GL_DEPTH_TEST)
 
-    c1 = Car(rgb(200, 200, 1), (0, 0, 0), (0, 0, 0))
+    c1 = Car(rgb(100, 100, 1), rgb(200, 200, 1), (0, 0, 0), (0, 0, 0))
     # c1.rotate(math.radians(45), 'y')
-    c2 = Car(rgb(255, 255, 255), (10, 0, 10), (0, 45, 0))
-    c3 = Car(rgb(178, 164, 255), (0, 0, 10), (0, 45, 0))
-    c4 = Car(rgb(255, 180, 180), (20, 0, 0), (0, 90, 0))
+    c2 = Car(rgb(100, 100, 100), rgb(255, 255, 255), (10, 0, 10), (0, 45, 0))
+    c3 = Car(rgb(150, 134, 200), rgb(178, 164, 255), (0, 0, 10), (0, 45, 0))
+    c4 = Car(rgb(150, 90, 90), rgb(255, 180, 180), (20, 0, 0), (0, 90, 0))
     g1 = Grid()
 
     velocity = 0.1
@@ -67,11 +67,11 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         c1.draw()
         c2.draw()
-        c2.rotate(0.01, 'y')
+        c2.rotate(0.01, "y")
         c3.draw()
-        c3.rotate(0.03, 'y')
+        c3.rotate(0.03, "y")
         c4.draw()
-        c4.rotate(0.02, 'y')
+        c4.rotate(0.02, "y")
         g1.draw()
 
         # p.draw()
@@ -79,5 +79,5 @@ def main():
         pygame.display.flip()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

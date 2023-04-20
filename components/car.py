@@ -8,25 +8,25 @@ from components.cuboid import Cuboid
 from components.cylinder import Cylinder
 
 
-class Wheel():
+class Wheel:
     def __init__(self, initalPos=(0, 0, 0), initialRotation=(0, 0, 0)) -> None:
         self.w1 = Cylinder(25, 0.5, 0.1, 4, rgb(86, 113, 137))
-        self.w1.setAxis('z')
+        self.w1.setAxis("z")
         self.w1.setOrigin(1, 0.5, 1)
 
         self.w2 = Cylinder(25, 0.5, 0.1, 4, rgb(86, 113, 137))
-        self.w2.setAxis('z')
+        self.w2.setAxis("z")
         self.w2.setOrigin(-1, 0.5, 1)
 
         self.w3 = Cylinder(25, 0.5, 0.1, 4, rgb(86, 113, 137))
-        self.w3.setAxis('z')
-        self.w3.setOrigin(1, 0.5,  -1)
+        self.w3.setAxis("z")
+        self.w3.setOrigin(1, 0.5, -1)
 
         self.w4 = Cylinder(25, 0.5, 0.1, 4, rgb(86, 113, 137))
-        self.w4.setAxis('z')
+        self.w4.setAxis("z")
         self.w4.setOrigin(-1, 0.5, -1)
 
-        self.rotate(math.radians(initialRotation[1]), 'y')
+        self.rotate(math.radians(initialRotation[1]), "y")
         self.translateXYZ(initalPos)
 
     def draw(self):
@@ -54,13 +54,15 @@ class Wheel():
         self.w4.rotateP(angle, pivotpoint)
 
 
-class Body():
-    def __init__(self, bodyColor, initalPos=(0, 0, 0), initialRotation=(0, 0, 0)) -> None:
-        self.buttomCuboid = Cuboid(2, 0.5, 1, bodyColor)
+class Body:
+    def __init__(
+        self, edgeColor, bodyColor, initalPos=(0, 0, 0), initialRotation=(0, 0, 0)
+    ) -> None:
+        self.buttomCuboid = Cuboid(2, 0.5, 1, edgeColor, bodyColor)
         self.buttomCuboid.rotateY(math.radians(initialRotation[1]))
         self.buttomCuboid.translateXYZ((0, 1, 0))
 
-        self.upperCuboid = Cuboid(1, 0.5, 1, bodyColor)
+        self.upperCuboid = Cuboid(1, 0.5, 1, edgeColor, bodyColor)
 
         self.upperCuboid.rotateY(math.radians(initialRotation[1]))
         self.upperCuboid.translateXYZ((0, 2, 0))
@@ -76,7 +78,7 @@ class Body():
         self.upperCuboid.translateXYZ(position)
 
     def rotate(self, angle, axis):
-        if axis == 'y':
+        if axis == "y":
             self.buttomCuboid.rotateY(angle)
             self.upperCuboid.rotateY(angle)
         else:
@@ -88,13 +90,22 @@ class Body():
 
 
 class Car:
-    def __init__(self, bodyColor: tuple, initialPosition: tuple = (0, 0, 0), initialRotation: tuple = (0, 0, 0)):
+    def __init__(
+        self,
+        edgeColor: tuple,
+        bodyColor: tuple,
+        initialPosition: tuple = (0, 0, 0),
+        initialRotation: tuple = (0, 0, 0),
+    ):
         self.wheel = Wheel(initialPosition, initialRotation)
-        self.body = Body(bodyColor, initialPosition, initialRotation)
+        self.body = Body(edgeColor, bodyColor, initialPosition, initialRotation)
 
         self.position = initialPosition
         self.prevPosition = (
-            initialPosition[0] - 1, initialPosition[1], initialPosition[2])
+            initialPosition[0] - 1,
+            initialPosition[1],
+            initialPosition[2],
+        )
         self.distance = 0
 
     def draw(self):
@@ -111,19 +122,18 @@ class Car:
         if isForward:
             self.position = np.add(self.position, _directionVector * distance)
         else:
-            self.position = np.subtract(
-                self.position, _directionVector * distance)
+            self.position = np.subtract(self.position, _directionVector * distance)
 
     def moveForward(self, distance, isForward=True):
         self.calculateNextPoint(distance, isForward)
         self.translateXYZ()
 
     def calculateRotationCenter(self, isLeft=True):
-        return (0,0,0)
+        return (0, 0, 0)
 
     def turnCar(self, angle, isLeft=True):
         pivotpoint = self.calculateRotationCenter(isLeft)
-        print("Turn Car :",pivotpoint, angle)
+        print("Turn Car :", pivotpoint, angle)
         self.wheel.rotatePivot(angle, pivotpoint)
         self.body.rotatePivot(angle, pivotpoint)
 
